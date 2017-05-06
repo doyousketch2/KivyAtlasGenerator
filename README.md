@@ -6,7 +6,7 @@ Win users might need to download it from their website
 https://www.python.org/downloads/  
 
 I used v3.4.2 to create this, so version 3 or higher is recommended.  
-It's possible it'll run in fine in v2.7x  the code is simple,  
+It's possible it'll run in fine in v2.7x - The code is simple,  
 and I think Kivy does OK on either, so whatever's clever, ya know?  
 
 ------
