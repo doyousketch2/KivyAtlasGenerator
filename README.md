@@ -1,6 +1,9 @@
 # KivyAtlasGenerator  
 Generates Kivy's .atlas files for spritesheets  
 
+To be used with my other project, KivyTileMapper  
+https://github.com/doyousketch2/KivyTileMapper  
+
 First you'll need Python.  Linux and OSX users should be fine as-is.  
 Win users might need to download it from their website  
 https://www.python.org/downloads/  
