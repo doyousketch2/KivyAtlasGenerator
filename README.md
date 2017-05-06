@@ -13,37 +13,37 @@ and I think Kivy does OK on either, so whatever's clever, ya know?
 Then you'll need Python's package installer, pip.  
 Pip should come with Python, but if not...  
 
-- Linux:
+- Linux:  
 `sudo apt-get update && apt-get install pip pip3`
 
-- OSX:
+- OSX:  
 `sudo easy_install pip`
 
-- Win:
+- Win:  
 if you don't have it, it's probably best to  
 download a new version of Python from their website.  
 
 ------
 **Use pip to install Kivy**
 
-- Linux:
+- Linux:  
 `pip3 install kivy`
 
-- OSX:
+- OSX:  
 `python -m pip install kivy`
 
-- Windows:
+- Windows:  
 `py -m pip install kivy`
 
 ------
 Alright, once you're certain you have Python and Kivy,  
 you can **run the KivyAtlasGenerator**  
 
-- Linux:
+- Linux:  
 `./main.py`
 
-- OSX:
+- OSX:  
 `./python -m main.py`
 
-- Win:
+- Win:  
 `py -m main.py`
