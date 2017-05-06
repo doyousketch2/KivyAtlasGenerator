@@ -1,7 +1,6 @@
 # KivyAtlasGenerator  
 Generates Kivy's .atlas files for spritesheets  
 
-------
 First you'll need Python.  Linux and OSX users should be fine as-is.  
 Win users might need to download it from their website  
 https://www.python.org/downloads/  
