@@ -1,0 +1,12 @@
+kivy
+
+
+##  (debian)
+##        sudo pip3 install -r requirements.txt
+##  (linux)
+##        sudo python3 -m pip install -r requirements.txt
+##  (mac)
+##        sudo easy_install pip
+##        python -m pip install -r requirements.txt
+##  (win)
+##        py -m pip install -r requirements.txt

@@ -1,0 +1,359 @@
+<FileScreen>:
+  label:  label
+
+  BoxLayout:
+    orientation:  'vertical'
+
+    FileChooserIconView:  ##  top region
+      path: './data'
+      filters: ['*.png']
+      canvas.before:
+        Color:
+          rgb:  .4, .5, .5
+        Rectangle:
+          pos:  self.pos
+          size:  self.size
+      on_selection:  root.select(*args)
+
+      BoxLayout:  ##  bottom region
+        orientation:  'horizontal'
+        size_hint_y:  0.06
+
+        Label:
+          id:  label
+          text:  'Select a spritesheet'
+          canvas.before:
+            Color:
+              rgb:  .2, .3, .3
+            Rectangle:
+              pos:  self.pos
+              size:  self.size
+
+        Button:
+          text:  'Select'
+          background_color:  .4, .5, .5,  1
+          on_release:  root.choice()
+          size_hint_x:  0.25
+
+
+<TileScreen>:
+  FloatLayout:
+    canvas:
+      Rectangle:
+        texture:  app.tex
+        pos:  self.pos
+        size:  app.img.texture_size
+
+    Button:
+      text:  'Calibrate XY'
+      background_normal:  'button12px.png'
+      background_down:  'down12px.png'
+      border:  12, 12, 12, 12
+
+      on_press:  root.cross()
+      on_release:  self.pos_hint = {'x' : 1.0, 'y' : 1.0}
+      on_release:  ok.background_color = (.0, .1, .2,  .9)
+
+      on_release:  tilehgp.background_color =  (.1, .7, .9,  .9)
+      on_release:  tilehgm.background_color =  (.1, .7, .9,  .9)
+      on_release:  tilehup.background_color =  (.1, .5, .7,  .9)
+      on_release:  tilehdn.background_color =  (.1, .5, .7,  .9)
+      on_release:  tilehp.background_color =  (.1, .7, .9,  .9)
+      on_release:  tilehm.background_color =  (.1, .7, .9,  .9)
+
+      on_release:  tilevp.background_color =  (.1, .7, .9,  .9)
+      on_release:  tilevm.background_color =  (.1, .7, .9,  .9)
+      on_release:  tilevl.background_color =  (.1, .5, .7,  .9)
+      on_release:  tilevr.background_color =  (.1, .5, .7,  .9)
+      on_release:  tilevgp.background_color =  (.1, .7, .9,  .9)
+      on_release:  tilevgm.background_color =  (.1, .7, .9,  .9)
+
+      size_hint:  (0.2, 0.2)
+      pos_hint:  {'x' : 0.4, 'y' : 0.4}
+
+    Button:
+      id:  ok
+      text:  'OK'
+      background_color:  0, 0, 0,  0
+      on_press:  root.ok()
+      on_release:  self.pos_hint = {'x' : 1.0, 'y' : 1.0}
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.45}
+
+##  Horizontal line
+
+    Button:
+      text:  'gap  +'
+      id: tilehgp
+      background_color:  0, 0, 0,  0
+      on_release:  root.gapy(1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.7, 'y' : 0.9}
+    Button:
+      text:  'gap  -'
+      id: tilehgm
+      background_color:  0, 0, 0,  0
+      on_release:  root.gapy(-1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.7, 'y' : 0.8}
+
+
+    Button:
+      text:  'Up'
+      id: tilehup
+      background_color:  0, 0, 0,  0
+      on_release:  root.vert(1, 0)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.8, 'y' : 0.9}
+    Button:
+      text:  'Down'
+      id: tilehdn
+      background_color:  0, 0, 0,  0
+      on_release:  root.vert(-1, 0)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.8, 'y' : 0.8}
+
+
+    Button:
+      text:  '+'
+      id: tilehp
+      background_color:  0, 0, 0,  0
+      on_release:  root.vert(0, 1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.9}
+    Button:
+      text:  '-'
+      id: tilehm
+      background_color:  0, 0, 0,  0
+      on_release:  root.vert(0, -1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.8}
+
+##  Vertical line
+
+    Button:
+      text:  '-'
+      id: tilevm
+      background_color:  0, 0, 0,  0
+      on_release:  root.horiz(0, -1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.8, 'y' : 0.22}
+    Button:
+      text:  '+'
+      id: tilevp
+      background_color:  0, 0, 0,  0
+      on_release:  root.horiz(0, 1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.22}
+
+
+    Button:
+      text:  'Left'
+      id: tilevl
+      background_color:  0, 0, 0,  0
+      on_release:  root.horiz(-1, 0)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.8, 'y' : 0.12}
+    Button:
+      text:  'Right'
+      id: tilevr
+      background_color:  0, 0, 0,  0
+      on_release:  root.horiz(1, 0)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.12}
+
+
+    Button:
+      text:  'gap  -'
+      id: tilevgm
+      background_color:  0, 0, 0,  0
+      on_release:  root.gapx(-1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.8, 'y' : 0.02}
+    Button:
+      text:  'gap  +'
+      id: tilevgp
+      background_color:  0, 0, 0,  0
+      on_release:  root.gapx(1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.02}
+
+
+<OkayScreen>:
+  FloatLayout:
+    canvas:
+      Rectangle:
+        texture:  app.tex
+        pos:  self.pos
+        size:  app.img.texture_size
+
+    Button:
+      id:  bgbutton
+      pos:  self.pos
+      size:  app.img.texture_size
+      on_release:  root.toggle()
+      on_release:  root.rename()
+      background_color:  1, 1, 1,  0
+
+    Button:
+      text:  'Populate grid\n\nthen click tiles to\ntoggle hide / show'
+      background_normal:  'button12px.png'
+      background_down:  'down12px.png'
+      border:  12, 12, 12, 12
+      halign: 'center'
+
+      on_press:  root.populate()
+      on_release:  self.pos_hint = {'x' : 1.0, 'y' : 1.0}
+      on_release:  rename.background_color = (.0, .9, .9,  .8)
+
+      on_release:  okhp.background_color =  (.1, .7, .9,  .9)
+      on_release:  okhm.background_color =  (.1, .7, .9,  .9)
+      on_release:  okhup.background_color =  (.1, .5, .7,  .9)
+      on_release:  okhdn.background_color =  (.1, .5, .9,  .9)
+      on_release:  okhgp.background_color =  (.1, .7, .7,  .9)
+      on_release:  okhgm.background_color =  (.1, .7, .9,  .9)
+
+      on_release:  okvp.background_color =  (.1, .7, .9,  .9)
+      on_release:  okvm.background_color =  (.1, .7, .9,  .9)
+      on_release:  okvl.background_color =  (.1, .5, .7,  .9)
+      on_release:  okvr.background_color =  (.1, .5, .7,  .9)
+      on_release:  okvgp.background_color =  (.1, .7, .9,  .9)
+      on_release:  okvgm.background_color =  (.1, .7, .7,  .9)
+
+      size_hint:  (0.2, 0.2)
+      pos_hint:  {'x' : 0.4, 'y' : 0.4}
+
+
+    Button:
+      id:  rename
+      halign: 'center'
+      text:  'Name\nTiles'
+      background_color:  0, 0, 0,  0
+      on_press:  root.nametiles()
+      on_release:  generate.background_color = (.0, .9, .9,  .8)
+      on_release:  rename.background_color = (0, 0, 0,  0)
+
+      on_release:  okhp.background_color =  (0, 0, 0,  0)
+      on_release:  okhm.background_color =  (0, 0, 0,  0)
+      on_release:  okhup.background_color =  (0, 0, 0,  0)
+      on_release:  okhdn.background_color =  (0, 0, 0,  0)
+      on_release:  okhgp.background_color =  (0, 0, 0,  0)
+      on_release:  okhgm.background_color =  (0, 0, 0,  0)
+
+      on_release:  okvp.background_color =  (0, 0, 0,  0)
+      on_release:  okvm.background_color =  (0, 0, 0,  0)
+      on_release:  okvl.background_color =  (0, 0, 0,  0)
+      on_release:  okvr.background_color =  (0, 0, 0,  0)
+      on_release:  okvgp.background_color =  (0, 0, 0,  0)
+      on_release:  okvgm.background_color =  (0, 0, 0,  0)
+
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.8, 'y' : 0.45}
+
+    Button:
+      id:  generate
+      halign: 'center'
+      text:  'Generate\nAtlas'
+      background_color:  0, 0, 0,  0
+      on_press:  root.generate()
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.45}
+
+##  Horizontal line
+
+    Button:
+      text:  'gap  +'
+      id:  okhp
+      background_color:  0, 0, 0,  0
+      on_release:  root.gapy(1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.7, 'y' : 0.9}
+    Button:
+      text:  'gap  -'
+      id:  okhm
+      background_color:  0, 0, 0,  0
+      on_release:  root.gapy(-1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.7, 'y' : 0.8}
+
+
+    Button:
+      text:  'Up'
+      id:  okhup
+      background_color:  0, 0, 0,  0
+      on_release:  root.vert(1, 0)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.8, 'y' : 0.9}
+    Button:
+      text:  'Down'
+      id:  okhdn
+      background_color:  0, 0, 0,  0
+      on_release:  root.vert(-1, 0)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.8, 'y' : 0.8}
+
+
+    Button:
+      text:  '+'
+      id:  okhgp
+      background_color:  0, 0, 0,  0
+      on_release:  root.vert(0, 1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.9}
+    Button:
+      text:  '-'
+      id:  okhgm
+      background_color:  0, 0, 0,  0
+      on_release:  root.vert(0, -1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.8}
+
+##  Vertical line
+
+    Button:
+      text:  '-'
+      id:  okvm
+      background_color:  0, 0, 0,  0
+      on_release:  root.horiz(0, -1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.8, 'y' : 0.22}
+    Button:
+      text:  '+'
+      id:  okvp
+      background_color:  0, 0, 0,  0
+      on_release:  root.horiz(0, 1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.22}
+
+
+    Button:
+      text:  'Left'
+      id:  okvl
+      background_color:  0, 0, 0,  0
+      on_release:  root.horiz(-1, 0)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.8, 'y' : 0.12}
+    Button:
+      text:  'Right'
+      id:  okvr
+      background_color:  0, 0, 0,  0
+      on_release:  root.horiz(1, 0)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.12}
+
+
+    Button:
+      text:  'gap  -'
+      id:  okvgm
+      background_color:  0, 0, 0,  0
+      on_release:  root.gapx(-1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.8, 'y' : 0.02}
+    Button:
+      text:  'gap  +'
+      id:  okvgp
+      background_color:  0, 0, 0,  0
+      on_release:  root.gapx(1)
+      size_hint:  (0.08, 0.08)
+      pos_hint:  {'x' : 0.9, 'y' : 0.02}
+

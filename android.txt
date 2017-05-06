@@ -1,0 +1,3 @@
+title=KivyAtlasGenerator
+author=Doyousketch2
+orientation=portrait
