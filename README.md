@@ -11,7 +11,8 @@ It's possible it'll run in fine in v2.7x  the code is simple,
 and I think Kivy does OK on either, so whatever's clever, ya know?  
 
 ------
-Then you'll need pip.  Pip should come with Python, but if not...
+Then you'll need Python's package installer, pip.  
+Pip should come with Python, but if not...  
 
 - Linux:
 `sudo apt-get update && apt-get install pip pip3`
@@ -24,7 +25,7 @@ if you don't have it, it's probably best to
 download a new version of Python from their website.  
 
 ------
-**Installing Kivy**
+**Use pip to install Kivy**
 
 - Linux:
 `pip3 install kivy`
