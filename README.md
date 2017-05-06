@@ -30,7 +30,7 @@ download a new version of Python from their website.
 `pip3 install kivy`
 
 - OSX:
-`pip install kivy`
+`python -m pip install kivy`
 
 - Windows:
 `py -m pip install kivy`
