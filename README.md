@@ -11,8 +11,7 @@ It's possible it'll run in fine in v2.7x  the code is simple,
 and I think Kivy does OK on either, so whatever's clever, ya know?  
 
 ------
-Then you'll need Kivy.  It's easy to **install this with pip.**  
-Pip should come with Python, but if not...
+Then you'll need pip.  Pip should come with Python, but if not...
 
 - Linux:
 `sudo apt-get update && apt-get install pip pip3`
