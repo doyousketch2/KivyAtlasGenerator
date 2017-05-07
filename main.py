@@ -352,32 +352,32 @@ class OkayScreen(Screen):
 
         if yy > 0:   ## up
           app .ribbon[0]  = app .name[ app .i - app .columns ]
-          app .btnUp  = Button(text = app .ribbon[0],  pos = (xpos,  ypos - 10),  size_hint = (.07, .055))
+          app .btnUp  = Button(text = app .ribbon[0],  pos = (xpos,  ypos - 10),  size_hint = (.08, .04))
           app .btnUp .bind(on_release = OkayScreen .appendup)
           self .add_widget(app .btnUp)
 
         if yy + 1 < app .rows:   ## down
           app .ribbon[1]  = app .name[ app .i + app .columns ]
-          app .btnDown  = Button(text = app .ribbon[1],  pos = (xpos,  ypos - 100),  size_hint = (.07, .055))
+          app .btnDown  = Button(text = app .ribbon[1],  pos = (xpos,  ypos - 100),  size_hint = (.08, .04))
           app .btnDown .bind(on_release = OkayScreen .appenddown)
           self .add_widget(app .btnDown)
 
         if xx > 0:   ## left
           app .ribbon[2]  = app .name[ app .i - 1 ]
-          app .btnLeft  = Button(text = app .ribbon[2],  pos = (xpos - 120,  ypos - 100),  size_hint = (.07, .055))
+          app .btnLeft  = Button(text = app .ribbon[2],  pos = (xpos - 120,  ypos - 100),  size_hint = (.08, .04))
           app .btnLeft .bind(on_release = OkayScreen .appendleft)
           self .add_widget(app .btnLeft)
 
         if xx + 1 < app .columns:   ## right
           app .ribbon[3]  = app .name[ app .i + 1 ]
-          app .btnRight  = Button(text = app .ribbon[3],  pos = (xpos + 120,  ypos - 100),  size_hint = (.07, .055))
+          app .btnRight  = Button(text = app .ribbon[3],  pos = (xpos + 120,  ypos - 100),  size_hint = (.08, .04))
           app .btnRight .bind(on_release = OkayScreen .appendright)
           self .add_widget(app .btnRight)
 
-        app .reset  = Button(text = 'Reset',  pos = (xpos - 120,  ypos - 10),  size_hint = (.07, .055),  background_color = (.2, .2, .2,  .9))
+        app .reset  = Button(text = 'Reset',  pos = (xpos - 120,  ypos - 10),  size_hint = (.05, .04),  background_color = (.2, .2, .2,  .9))
         app .reset .bind(on_press = OkayScreen .reset)
 
-        app .clear  = Button(text = 'Clear',  pos = (xpos + 120,  ypos - 10),  size_hint = (.07, .055),  background_color = (.2, .2, .2,  .9))
+        app .clear  = Button(text = 'Clear',  pos = (xpos + 158,  ypos - 10),  size_hint = (.05, .04),  background_color = (.2, .2, .2,  .9))
         app .clear .bind(on_press = OkayScreen .clear)
 
         self .add_widget(app .reset)
