@@ -413,10 +413,10 @@ class OkayScreen(Screen):
     Output  = '\n' .join(JSONlist)   ## stringify list
 
     print('Writing\n')
-    with open('data/' + app .filename + '.app', 'w') as fileOut:
+    with open('data/' + app .filename + '.atlas', 'w') as fileOut:
       fileOut .write(Output)
 
-    print('Written to data/' + app .filename + '.app')
+    print('Written to data/' + app .filename + '.atlas')
     sys .exit()
 
 
