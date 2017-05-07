@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ##=========================================================
-##  atlas.py                                    21 Apr 2017
+##  app.py                                    21 Apr 2017
 ##
 ##  Generates a Kivy Atlas from spritesheet
 ##
@@ -29,7 +29,7 @@
 import  os
 import  sys
 
-from  kivy .app           import  App               ##  GUI
+from  kivy .app           import  App                ## GUI
 from  kivy .graphics       import *
 from  kivy .lang            import  Builder
 from  kivy .uix .image       import  Image
@@ -47,14 +47,14 @@ from  kivy .uix .button     import  Button
 ##=========================================================
 ##  config  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-WIDTH  = 400
+WIDTH  = 800
 HEIGHT  = 600
 
 ##=========================================================
 ##  script  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Window .size  = ( WIDTH, HEIGHT )
-Builder .load_file('./atlas.kv')  ##  Kivy is buggy, needed for ScreenManager
+Builder .load_file('./atlas.kv')   ## Kivy is buggy, needed for ScreenManager
 
 
 class FileScreen(Screen):
@@ -62,31 +62,31 @@ class FileScreen(Screen):
   def select(self, *args):
     self .selection  = args[1][0]
     try:
-      atlas .selected  = self .selection
-      self .label .text  = atlas .selected
+      app .selected  = self .selection
+      self .label .text  = app .selected
     except:  pass
 
 
   def choice(self):
 
-    atlas .path, atlas .ext  = os .path .splitext( atlas .selected )
+    app .path,  app .ext  = os .path .splitext( app .selected )
 
-    if '/' in atlas .path:  ##  Unix, Linux, Android, Mac OSX, iOS
-      atlas .filename  = atlas .path .split('/')[-1]
-    else:  ##  the other OS
-      atlas .filename  = atlas .path .split('\\')[-1]
-    print(atlas .filename)
+    if '/' in app .path:   ## Unix, Linux, Android, Mac OSX, iOS
+      app .filename  = app .path .split('/')[-1]
+    else:   ## the other OS
+      app .filename  = app .path .split('\\')[-1]
+    print(app .filename)
 
-    atlas .img  = Image( source = atlas .selected )
-    atlas .tex  = atlas .img .texture
+    app .img  = Image( source = app .selected )
+    app .tex  = app .img .texture
 
-    atlas .X  = atlas .img .texture_size[0]
-    atlas .Y  = atlas .img .texture_size[1]
+    app .X  = app .img .texture_size[0]
+    app .Y  = app .img .texture_size[1]
 
-    atlas .imgW  = atlas .img .texture_size[0]  = atlas .img .texture_size[0] * 2
-    atlas .imgH  = atlas .img .texture_size[1]  = atlas .img .texture_size[1] * 2
+    app .imgW  = app .img .texture_size[0]  = app .img .texture_size[0] * 2
+    app .imgH  = app .img .texture_size[1]  = app .img .texture_size[1] * 2
 
-    Window .size  = ( atlas .imgW,  atlas .imgH )
+    Window .size  = ( app .imgW,  app .imgH )
     self .manager .switch_to( TileScreen() )
 
 
@@ -97,85 +97,85 @@ class TileScreen(Screen):
   def cross(self):
 
     with self .canvas:
-      Color( 1, 0, 0,  0.2 )  ##  red highlight
+      Color( 1, 0, 0,  0.2 )   ## red highlight
 
-      posit  = ( atlas .X,  0 )
-      siz  = ( atlas .high,  atlas .imgH )
-      atlas .recthoriz  = Rectangle( pos = posit,  size = siz )
+      posit  = ( app .X,  0 )
+      siz  = ( app .high,  app .imgH )
+      app .recthoriz  = Rectangle( pos = posit,  size = siz )
 
-      posit  = ( 0,  atlas .Y )
-      siz  = ( atlas .imgW,  atlas .wide )
-      atlas .rectvert  = Rectangle( pos = posit,  size = siz )
+      posit  = ( 0,  app .Y )
+      siz  = ( app .imgW,  app .wide )
+      app .rectvert  = Rectangle( pos = posit,  size = siz )
 
 
-      Color( 0, 0, 0,  0.5 )  ##  black padding
+      Color( 0, 0, 0,  0.5 )   ## black padding
 
-      posit  = ( atlas .X + atlas .high,  0 )
-      siz  = ( atlas .padX,  atlas .imgH )
-      atlas .horizpad  = Rectangle( pos = posit,  size = siz )
+      posit  = ( app .X + app .high,  0 )
+      siz  = ( app .padX,  app .imgH )
+      app .horizpad  = Rectangle( pos = posit,  size = siz )
 
-      posit  = ( 0,  atlas .Y )
-      siz  = ( atlas .imgW,  -atlas .padY )
-      atlas .vertpad  = Rectangle( pos = posit,  size = siz )
+      posit  = ( 0,  app .Y )
+      siz  = ( app .imgW,  -app .padY )
+      app .vertpad  = Rectangle( pos = posit,  size = siz )
 
 
   def ok(self):
-    atlas .eachX  = atlas .wide + atlas .padX
-    atlas .eachY  = atlas .high + atlas .padY
+    app .eachX  = app .wide + app .padX
+    app .eachY  = app .high + app .padY
 
-    atlas .originX  = atlas .recthoriz .pos[0]
-    atlas .originY  = atlas .rectvert .pos[1]
+    app .originX  = app .recthoriz .pos[0]
+    app .originY  = app .rectvert .pos[1]
 
-    while atlas .originX - atlas .eachX > 0:
-      atlas .originX  -= atlas .eachX
+    while app .originX - app .eachX > 0:
+      app .originX  -= app .eachX
 
-    while atlas .originY + atlas .eachY < atlas .imgH:
-      atlas .originY  += atlas .eachY
+    while app .originY + app .eachY < app .imgH:
+      app .originY  += app .eachY
 
     self .manager .switch_to( OkayScreen() )
 
 
   def updateX(self):
-    atlas .recthoriz .pos   = ( atlas .X,  0 )
-    atlas .recthoriz .size  = ( atlas .wide,  atlas .imgH )
+    app .recthoriz .pos   = ( app .X,  0 )
+    app .recthoriz .size  = ( app .wide,  app .imgH )
 
-    atlas .horizpad  .pos   = ( atlas .X + atlas .wide,  0 )
-    atlas .horizpad  .size  = ( atlas .padX,  atlas .imgH )
+    app .horizpad  .pos   = ( app .X + app .wide,  0 )
+    app .horizpad  .size  = ( app .padX,  app .imgH )
 
 
   def updateY(self):
-    atlas .rectvert .pos   = ( 0,  atlas .imgH - atlas .Y )
-    atlas .rectvert .size  = ( atlas .imgW,  atlas .high )
+    app .rectvert .pos   = ( 0,  app .imgH - app .Y )
+    app .rectvert .size  = ( app .imgW,  app .high )
 
-    atlas .vertpad  .pos   = ( 0,  atlas .imgH - atlas .Y )
-    atlas .vertpad  .size  = ( atlas .imgW,  -atlas .padY )
+    app .vertpad  .pos   = ( 0,  app .imgH - app .Y )
+    app .vertpad  .size  = ( app .imgW,  -app .padY )
 
 
   def horiz(self, x, w):
-    atlas .X  += x
-    atlas .wide  += w
-    if atlas .X < 0:  atlas .X  = 0
-    if atlas .wide < 0:  atlas .wide  = 0
+    app .X  += x
+    app .wide  += w
+    if app .X < 0:  app .X  = 0
+    if app .wide < 0:  app .wide  = 0
     TileScreen .updateX(self)
 
 
   def vert(self, y, h):
-    atlas .Y  -= y
-    atlas .high  += h
-    if atlas .Y < 0:  atlas .Y  = 0
-    if atlas .high < 0:  atlas .high  = 0
+    app .Y  -= y
+    app .high  += h
+    if app .Y < 0:  app .Y  = 0
+    if app .high < 0:  app .high  = 0
     TileScreen .updateY(self)
 
 
   def gapx(self, x):
-    atlas .padX  += x
-    if atlas .padX < 0:  atlas .padX  = 0
+    app .padX  += x
+    if app .padX < 0:  app .padX  = 0
     TileScreen .updateX(self)
 
 
   def gapy(self, y):
-    atlas .padY  -= y
-    if atlas .padY < 0:  atlas .padY  = 0
+    app .padY  -= y
+    if app .padY < 0:  app .padY  = 0
     TileScreen .updateY(self)
 
 
@@ -189,21 +189,21 @@ class OkayScreen(Screen):
 
   def populate(self):
 
-    if len(atlas .origin) == 0:
-      while atlas .originX + (atlas .columns + 1) * atlas .eachX < atlas .imgW:
-        atlas .columns += 1
+    if len(app .origin) == 0:
+      while app .originX + (app .columns + 1) * app .eachX < app .imgW:
+        app .columns += 1
 
-      while atlas .originY - (atlas .rows + 1) * atlas .eachY > 0:
-        atlas .rows += 1
+      while app .originY - (app .rows + 1) * app .eachY > 0:
+        app .rows += 1
 
-      howmany  = int(atlas .columns * atlas .rows)
+      howmany  = int(app .columns * app .rows)
 
-      atlas .sprite = [0] * howmany
-      atlas .origin = [0] * howmany
-      atlas .posX   = [0] * howmany
-      atlas .posY   = [0] * howmany
-      atlas .name   = [0] * howmany
-      atlas .ribbon = [0] * 4
+      app .sprite = [0] * howmany
+      app .origin = [0] * howmany
+      app .posX   = [0] * howmany
+      app .posY   = [0] * howmany
+      app .name   = [0] * howmany
+      app .ribbon = [0] * 4
 
       alphabet  = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -211,245 +211,272 @@ class OkayScreen(Screen):
                  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
                  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
       i  = -1
-      for y in range(atlas .rows):
-        for x in range(atlas .columns):
+      for y in range(app .rows):
+        for x in range(app .columns):
           i += 1
-          if y > len(alphabet):  ##  so we don't run out of letters;  A, AA, AAA, AAAA, etc.
+          if y > len(alphabet):   ## so we don't run out of letters;  A, AA, AAA, AAAA, etc.
             a  = alphabet[y % len(alphabet)] * int(y / len(alphabet) + 1)
           else:
             a  = alphabet[y]
 
-          atlas .name[i]  = '%s%s' % (a,  x + 1)
+          app .name[i]  = '%s%s' % (a,  x + 1)
 
     OkayScreen .update(self)
 
 
   def toggle(self):
 
-    if atlas .naming < 1:
-      if len(atlas .origin) > 0:
+    if app .naming < 1:
+      if len(app .origin) > 0:
         mX  = Window .mouse_pos[0]
         mY  = Window .mouse_pos[1]
 
-        xx  = int(( mX - atlas .originX ) / atlas .eachX )
-        yy  = int(( atlas .originY - mY ) / atlas .eachY )
+        xx  = int(( mX - app .originX ) / app .eachX )
+        yy  = int(( app .originY - mY ) / app .eachY )
 
-        i  = yy * atlas .columns + xx
+        i  = yy * app .columns + xx
 
-        if atlas .sprite[i] .pos == (atlas .imgW,  atlas .imgH):
-          atlas .sprite[i] .pos  = atlas .origin[i]
+        if app .sprite[i] .pos == (app .imgW,  app .imgH):
+          app .sprite[i] .pos  = app .origin[i]
         else:
-          atlas .origin[i]  = atlas .sprite[i] .pos
-          atlas .sprite[i] .pos  = (atlas .imgW,  atlas .imgH)
+          app .origin[i]  = app .sprite[i] .pos
+          app .sprite[i] .pos  = (app .imgW,  app .imgH)
 
 
   def nametiles(self):
-    atlas .naming = 1
+    ## Kivy sux again...  I dunno what the trick is.
+    ## They let you remove some widgets, but not others?
+    '''
+    self .remove_widget( self .ids .rename )
+    self .remove_widget( self .ids .okhp )
+    self .remove_widget( self .ids .okhm )
+    self .remove_widget( self .ids .okhup )
+    self .remove_widget( self .ids .okhdn )
+    self .remove_widget( self .ids .okhgp )
+    self .remove_widget( self .ids .okhgm )
+
+    self .remove_widget( self .ids .okvp )
+    self .remove_widget( self .ids .okvm )
+    self .remove_widget( self .ids .okvl )
+    self .remove_widget( self .ids .okvr )
+    self .remove_widget( self .ids .okvgp )
+    self .remove_widget( self .ids .okvgm )
+    '''
+     ## instead, I cheated, by shoving all these buttons
+     ## to the top-right corner of the screen,
+     ## so they still exist, you just can't see them.
+     ## in the .kv file:   pos_hint  = { 'x': 1, 'y': 1 }
+    app .naming = 1
 
 
   def gettext(self):
-    print(atlas .textinput .text)
-    atlas .name[atlas .i]  = atlas .textinput .text
+    print(app .textinput .text)
+    app .name[app .i]  = app .textinput .text
 
 ##  kivy doesn't allow you to pass args to button functions,
 ##  so these are simple redundant 'callbacks'
 
   def appendup(self):
-    atlas .textinput .text += atlas .ribbon[0]
+    app .textinput .text += app .ribbon[0]
 
 
   def appenddown(self):
-    atlas .textinput .text += atlas .ribbon[1]
+    app .textinput .text += app .ribbon[1]
 
 
   def appendleft(self):
-    atlas .textinput .text += atlas .ribbon[2]
+    app .textinput .text += app .ribbon[2]
 
 
   def appendright(self):
-    atlas .textinput .text += atlas .ribbon[3]
+    app .textinput .text += app .ribbon[3]
 
 
   def reset(self):
-    atlas .textinput .text  = atlas .name[atlas .i]
+    app .textinput .text  = app .name[app .i]
 
 
   def clear(self):
-    atlas .textinput .text  = ''
+    app .textinput .text  = ''
 
 
   def rename(self):
-    if atlas .textinput != 0:
-      self .remove_widget(atlas .textinput)
-      self .remove_widget(atlas .reset)
-      self .remove_widget(atlas .clear)
+    if app .textinput != 0:
+      self .remove_widget(app .textinput)
+      self .remove_widget(app .reset)
+      self .remove_widget(app .clear)
 
-##  kivy doesn't have a way to test if a widget exists,
-##  so you have to try: remove, except: pass
+      ##  Kivy doesn't have a way to test if a widget exists,
+      ##  so you have to try:  remove,  except: pass
 
-      try:  self .remove_widget(atlas .butup)
+      try:  self .remove_widget(app .btnUp)
       except:  pass
 
-      try:  self .remove_widget(atlas .butdown)
+      try:  self .remove_widget(app .btnDown)
       except:  pass
 
-      try:  self .remove_widget(atlas .butleft)
+      try:  self .remove_widget(app .btnLeft)
       except:  pass
 
-      try:  self .remove_widget(atlas .butright)
+      try:  self .remove_widget(app .btnRight)
       except:  pass
 
-      atlas .textinput  = 0
+      app .textinput  = 0
 
-    if atlas .naming > 0:
-      if len(atlas .origin) > 0:
+    if app .naming > 0:
+      if len(app .origin) > 0:
         mX  = Window .mouse_pos[0]
         mY  = Window .mouse_pos[1]
 
-        xx  = int(( mX - atlas .originX ) / atlas .eachX )
-        yy  = int(( atlas .originY - mY ) / atlas .eachY )
+        xx  = int(( mX - app .originX ) / app .eachX )
+        yy  = int(( app .originY - mY ) / app .eachY )
 
-        atlas .i  = yy * atlas .columns + xx
+        app .i  = yy * app .columns + xx
 
-        print(atlas .name[atlas .i])
+        print(app .name[app .i])
 
-        atlas .textinput  = TextInput(text = atlas .name[atlas .i],  multiline = False,  size_hint = (0.2, 0.05))
+        app .textinput  = TextInput(text = app .name[app .i],  multiline = False,  size_hint = (0.15, 0.05))
 
-        if mY - 50 < 0:
-          ypos  = mY + 50
+        if mX - 320 < 0:
+          xpos  = mX + 150
         else:
-          ypos  = mY - 50
+          xpos  = mX - 200
 
-        atlas .textinput .pos  = (atlas .imgW / 4, ypos)
-        atlas .textinput .bind(on_text_validate  = OkayScreen .gettext)
+        if mY - 150 < 0:
+          ypos  = mY + 150
+        else:
+          ypos  = mY - 100
 
-        if yy > 0:  ##  up
-          atlas .ribbon[0]  = atlas .name[ atlas .i - atlas .columns ]
-          atlas .butup  = Button(text = atlas .ribbon[0],  pos = (atlas .imgW / 4, ypos + 50),  size_hint = (.1, .055))
-          atlas .butup .bind(on_release = OkayScreen .appendup)
-          self .add_widget(atlas .butup)
+        app .textinput .pos  = (xpos - 50,  ypos - 50)
+        app .textinput .bind(on_text_validate  = OkayScreen .gettext)
 
-        if yy < atlas .rows:  ##  down
-          atlas .ribbon[1]  = atlas .name[ atlas .i + atlas .columns ]
-          atlas .butdown  = Button(text = atlas .ribbon[1],  pos = (atlas .imgW / 4, ypos - 50),  size_hint = (.1, .055))
-          atlas .butdown .bind(on_release = OkayScreen .appenddown)
-          self .add_widget(atlas .butdown)
+        if yy > 0:   ## up
+          app .ribbon[0]  = app .name[ app .i - app .columns ]
+          app .btnUp  = Button(text = app .ribbon[0],  pos = (xpos,  ypos - 10),  size_hint = (.07, .055))
+          app .btnUp .bind(on_release = OkayScreen .appendup)
+          self .add_widget(app .btnUp)
 
-        if xx > 0:  ##  left
-          atlas .ribbon[2]  = atlas .name[ atlas .i - 1 ]
-          atlas .butleft  = Button(text = atlas .ribbon[2],  pos = (atlas .imgW / 8, ypos - 50),  size_hint = (.1, .055))
-          atlas .butleft .bind(on_release = OkayScreen .appendleft)
-          self .add_widget(atlas .butleft)
+        if yy + 1 < app .rows:   ## down
+          app .ribbon[1]  = app .name[ app .i + app .columns ]
+          app .btnDown  = Button(text = app .ribbon[1],  pos = (xpos,  ypos - 100),  size_hint = (.07, .055))
+          app .btnDown .bind(on_release = OkayScreen .appenddown)
+          self .add_widget(app .btnDown)
 
-        if xx + 1 < atlas .columns:  ##  right
-          atlas .ribbon[3]  = atlas .name[ atlas .i + 1 ]
-          atlas .butright  = Button(text = atlas .ribbon[3],  pos = (atlas .imgW / 8 * 3, ypos - 50),  size_hint = (.1, .055))
-          atlas .butright .bind(on_release = OkayScreen .appendright)
-          self .add_widget(atlas .butright)
+        if xx > 0:   ## left
+          app .ribbon[2]  = app .name[ app .i - 1 ]
+          app .btnLeft  = Button(text = app .ribbon[2],  pos = (xpos - 120,  ypos - 100),  size_hint = (.07, .055))
+          app .btnLeft .bind(on_release = OkayScreen .appendleft)
+          self .add_widget(app .btnLeft)
 
-        atlas .reset  = Button(text = 'Reset',  pos = (atlas .imgW / 8, ypos + 50),  size_hint = (.1, .055),  background_color = (.2, .2, .2,  .9))
-        atlas .reset .bind(on_press = OkayScreen .reset)
+        if xx + 1 < app .columns:   ## right
+          app .ribbon[3]  = app .name[ app .i + 1 ]
+          app .btnRight  = Button(text = app .ribbon[3],  pos = (xpos + 120,  ypos - 100),  size_hint = (.07, .055))
+          app .btnRight .bind(on_release = OkayScreen .appendright)
+          self .add_widget(app .btnRight)
 
-        atlas .clear  = Button(text = 'Clear',  pos = (atlas .imgW / 8 * 3, ypos + 50),  size_hint = (.1, .055),  background_color = (.2, .2, .2,  .9))
-        atlas .clear .bind(on_press = OkayScreen .clear)
+        app .reset  = Button(text = 'Reset',  pos = (xpos - 120,  ypos - 10),  size_hint = (.07, .055),  background_color = (.2, .2, .2,  .9))
+        app .reset .bind(on_press = OkayScreen .reset)
 
-        self .add_widget(atlas .reset)
-        self .add_widget(atlas .clear)
-        self .add_widget(atlas .textinput)
-        atlas .textinput .focus  = True
+        app .clear  = Button(text = 'Clear',  pos = (xpos + 120,  ypos - 10),  size_hint = (.07, .055),  background_color = (.2, .2, .2,  .9))
+        app .clear .bind(on_press = OkayScreen .clear)
+
+        self .add_widget(app .reset)
+        self .add_widget(app .clear)
+        self .add_widget(app .textinput)
+        app .textinput .focus  = True
 
 
   def generate(self):
     JSONlist  = ['{']
-    JSONlist .append('  "' + atlas .filename + atlas .ext + '": {')
+    JSONlist .append('  "' + app .filename + app .ext + '": {')
 
     i  = 0
     tile  = 0
-    while i < len(atlas .sprite):
-      if atlas .sprite[i] .pos != (atlas .imgW,  atlas .imgH):
+    while i < len(app .sprite):
+      if app .sprite[i] .pos != (app .imgW,  app .imgH):
 
-        xx  = int(atlas .posX[i] / 2)
-        yy  = int(atlas .posY[i] / 2)
-        ww  = int(atlas .wide / 2)
-        hh  = int(atlas .high / 2)
+        xx  = int(app .posX[i] / 2)
+        yy  = int(app .posY[i] / 2)
+        ww  = int(app .wide / 2)
+        hh  = int(app .high / 2)
 
-        string  = '    "%s":  [ %s, %s,  %s, %s],' % ( atlas .name[i], xx, yy, ww, hh )
+        string  = '    "%s":  [ %s, %s,  %s, %s],' % ( app .name[i], xx, yy, ww, hh )
         JSONlist .append( string )
         tile += 1
       i += 1
 
-    JSONlist[-1]  = ',' .join( JSONlist[-1] .split(',')[:-1] )  ##  remove trailing comma on last entry
+    JSONlist[-1]  = ',' .join( JSONlist[-1] .split(',')[:-1] )   ## remove trailing comma on last entry
 
     JSONlist .append('  }')
     JSONlist .append('}')
 
-    Output  = '\n' .join(JSONlist)  ##  stringify list
+    Output  = '\n' .join(JSONlist)   ## stringify list
 
     print('Writing\n')
-    with open('data/' + atlas .filename + '.atlas', 'w') as fileOut:
+    with open('data/' + app .filename + '.app', 'w') as fileOut:
       fileOut .write(Output)
 
-    print('Written to data/' + atlas .filename + '.atlas')
+    print('Written to data/' + app .filename + '.app')
     sys .exit()
 
 
   def update(self):
     i  = -1
-    for y in range(atlas .rows):
-      for x in range(atlas .columns):
+    for y in range(app .rows):
+      for x in range(app .columns):
         i += 1
 
-        atlas .posX[i]  = atlas .originX + x * atlas .eachX
-        atlas .posY[i]  = atlas .originY - (y + 1) * atlas .eachY
+        app .posX[i]  = app .originX + x * app .eachX
+        app .posY[i]  = app .originY - (y + 1) * app .eachY
 
-        posit  = ( atlas .posX[i],  atlas .posY[i] )
-        siz  = ( atlas .wide,  atlas .high )
+        posit  = ( app .posX[i],  app .posY[i] )
+        siz  = ( app .wide,  app .high )
 
-        if atlas .sprite[i] == 0:
+        if app .sprite[i] == 0:
           with self .canvas:
             Color( 1, 0, 0,  0.2 )
-            atlas .sprite[i]  = Rectangle( pos = posit,  size = siz )
+            app .sprite[i]  = Rectangle( pos = posit,  size = siz )
 
-        elif atlas .sprite[i] .pos != (atlas .imgW,  atlas .imgH):
-          atlas .sprite[i] .pos  = posit
-          atlas .sprite[i] .size  = siz
+        elif app .sprite[i] .pos != (app .imgW,  app .imgH):
+          app .sprite[i] .pos  = posit
+          app .sprite[i] .size  = siz
 
 
   def horiz(self, x, w):
-    atlas .originX  += x
-    atlas .wide  += w
-    atlas .eachX  = atlas .wide + atlas .padX
-    if atlas .X < 0:  atlas .X  = 0
-    if atlas .wide < 0:  atlas .wide  = 0
+    app .originX  += x
+    app .wide  += w
+    app .eachX  = app .wide + app .padX
+    if app .X < 0:  app .X  = 0
+    if app .wide < 0:  app .wide  = 0
     OkayScreen .update(self)
 
 
   def vert(self, y, h):
-    atlas .originY  += y
-    atlas .high  += h
-    atlas .eachY  = atlas .high + atlas .padY
-    if atlas .Y < 0:  atlas .Y  = 0
-    if atlas .high < 0:  atlas .high  = 0
+    app .originY  += y
+    app .high  += h
+    app .eachY  = app .high + app .padY
+    if app .Y < 0:  app .Y  = 0
+    if app .high < 0:  app .high  = 0
     OkayScreen .update(self)
 
 
   def gapx(self, x):
-    atlas .padX  += x
-    atlas .eachX  = atlas .wide + atlas .padX
-    if atlas .padX < 0:  atlas .padX  = 0
+    app .padX  += x
+    app .eachX  = app .wide + app .padX
+    if app .padX < 0:  app .padX  = 0
     OkayScreen .update(self)
 
 
   def gapy(self, y):
-    atlas .padY  += y
-    atlas .eachY  = atlas .high + atlas .padY
-    if atlas .padY < 0:  atlas .padY  = 0
+    app .padY  += y
+    app .eachY  = app .high + app .padY
+    if app .padY < 0:  app .padY  = 0
     OkayScreen .update(self)
 
 
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class atlas(App):
+class app(App):
   icon  = 'icon.png'
   title  = "Kivy Atlas Generator   ::   by Doyousketch2"
 
@@ -496,10 +523,10 @@ class atlas(App):
   img  = Image( source = selected )
   tex  = img .texture
 
-  butup    = 0
-  butdown  = 0
-  butleft  = 0
-  butright = 0
+  btnUp    = 0
+  btnDown  = 0
+  btnLeft  = 0
+  btnRight = 0
 
   clear  = 0
   reset  = 0
@@ -515,9 +542,8 @@ class atlas(App):
 ##  main  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if __name__ == '__main__':
-  atlas() .run()
+  app() .run()
 
 
 ##=========================================================
 ##  eof  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
